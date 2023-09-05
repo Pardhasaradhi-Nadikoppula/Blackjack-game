@@ -1,0 +1,110 @@
+############### Blackjack Project #####################
+from art import logo
+from replit import clear
+
+def blackjack():
+    
+    import random
+    
+    cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+    
+    bankamount = 1000
+    
+    humanbet = int(input(f"How much do you want to bet, bet should be less than {bankamount} $?"))
+    
+    bankamount = (1000 - humanbet)
+    
+    random_card1 = random.choice(cards)
+    random_card2 = random.choice(cards)
+    random_card3 = random.choice(cards)
+    
+    humancards = [random_card1 , random_card2]
+    print(f"Human cards are : {humancards}")
+    
+    humanscore = 0
+    
+    for ele in range(0, len(humancards)):
+        humanscore = humanscore + humancards[ele]
+        
+    computercards = [random_card3, "X" ]
+    
+    print(f"Computer cards are : {computercards}")
+    
+    print(f"Human score : {humanscore}")
+    
+    humanchoice = input("Do you want to 'hit' or 'stand'? ")
+    
+        
+    while humanchoice == "hit" and humanscore < 22:
+        humancards.append(random.choice(cards))
+        humanscore = 0
+        print(humancards)
+        for ele in range(0, len(humancards)):
+            humanscore = humanscore + humancards[ele]
+        print(f"Human score : {humanscore}")
+        if humanscore > 22:
+            break
+        humanchoice = input("Do you want to 'hit' or 'stand'? ")
+        
+        
+    computercards = [random_card3, random.choice(cards)]
+    
+    computerscore = 0
+    
+    while humanchoice == "stand" or humanscore >= 21:
+        computercards.append(random.choice(cards))    
+        for ele in range(0, len(computercards)):
+            computerscore = computerscore + computercards[ele]
+            
+        if humanscore > 21 and computerscore > 21:
+            print(f"Computer cards are : {computercards}")
+            print(f"Computer score : {computerscore}")
+            if computerscore < humanscore:
+                print(f"Computer wins the game!! and you lose the bet of {humanbet} $")
+                selection = input("Do you want to play the game type 'y' or 'n'")
+                break
+            elif computerscore > humanscore:
+                humanprofit = 2 * humanbet
+                print(f"Congratulations!! You won the game and bet of {2 * humanbet} $ and your bank balance is now { bankamount + humanprofit }")
+                selection = input("Do you want to play the game type 'y' or 'n'")
+                break
+        elif computerscore <= 21 and computerscore >= 18:
+            print(f"Computer cards are : {computercards}")
+            print(f"Computer score : {computerscore}")
+            if computerscore > humanscore:
+                print(f"Computer wins the game!! and you lose the bet of {humanbet} $")
+                selection = input("Do you want to play the game type 'y' or 'n'")
+                break
+            elif computerscore == humanscore:
+                print("It's a Tie break")
+                selection = input("Do you want to play the game type 'y' or 'n'")
+                break
+            elif computerscore < humanscore and humanscore <=21:
+                humanprofit = 2 * humanbet
+                print(f"Congratulations!! You won the game and bet of {2 * humanbet} $ and your bank balance is now { bankamount + humanprofit }")
+                selection = input("Do you want to play the game type 'y' or 'n'")
+                break
+        elif computerscore >= 22:
+            print(f"Computer cards are : {computercards}")
+            print(f"Computer score : {computerscore}")
+            if computerscore >= humanscore:
+                humanprofit = 2 * humanbet
+                print(f"Congratulations!! You won the game and bet of {2 * humanbet} $ and your bank balance is now { bankamount + humanprofit }")
+                selection = input("Do you want to play the game type 'y' or 'n'")
+                break
+            elif computerscore < humanscore:
+                print(f"Computer wins the game!! and you lose the bet of {humanbet} $")
+                selection = input("Do you want to play the game type 'y' or 'n'")
+                break
+    if selection == "y":
+      clear()
+      print(logo)
+      blackjack() 
+    else:
+      exit()
+
+if selection == "y":
+  print(logo)
+  blackjack()
+else:
+  exit()
